@@ -36,26 +36,16 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
   if (diff) {
     console.log(`Diff found, running post-commit for ${name}`);
     run({command: 'git', args: ['log', '-1']}).then((res) => {
-      const initalVersion = process.env.npm_package_version
-      const version = {
-        major: Number(initalVersion.split('.')[0]),
-        minor: Number(initalVersion.split('.')[1]),
-        patch: Number(initalVersion.split('.')[2])
-      }
       const commitMessage = res.split('\n')[4].trim();
       const changeType = commitMessage.split(':')[0].trim();
+      let versionUpdate = 'patch';
       if (changeType.toLowerCase() == 'feature!' || changeType.toLowerCase() == 'feat!' || changeType.toLowerCase() == 'f!') {
-          version.major++;
-          version.minor = 0;
-          version.patch = 0;
+        versionUpdate = 'major';
       } else if (changeType.toLowerCase() == 'feature' || changeType.toLowerCase() == 'feat' || changeType.toLowerCase() == 'f') {
-        version.minor++;
-        version.patch = 0;
-      } else {
-        version.patch++;
+        versionUpdate = 'minor';
       }
-      run({command: 'npm', args: [`--no-git-tag-version`, `version`, `${version.major}.${version.minor}.${version.patch}`]}).then(() => {
-        const successMsg = `Bumped version of ${name} from ${initalVersion} to ${version.major}.${version.minor}.${version.patch}`
+      run({command: 'npm', args: [`--no-git-tag-version`, `version`, versionUpdate]}).then(() => {
+        const successMsg = `Bumped version of ${name} to match latest ${versionUpdate} release`
         run({command: 'git', args: [`add`, '.']}).then(() => {
           run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
             console.log(successMsg);
