@@ -54,7 +54,7 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
       } else {
         version.patch++;
       }
-      run({command: 'npm', args: [`version`, `${version.major}.${version.minor}.${version.patch}`]}).then(() => {
+      run({command: 'npm', args: [`--no-git-tag-version`, `version`, `${version.major}.${version.minor}.${version.patch}`]}).then(() => {
         const successMsg = `Bumped version of ${name} from ${initalVersion} to ${version.major}.${version.minor}.${version.patch}`
         run({command: 'git', args: [`add`, '.']}).then(() => {
           run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
