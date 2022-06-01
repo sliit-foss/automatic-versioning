@@ -1,0 +1,47 @@
+{
+  "name": "version-bump",
+  "version": "1.0.0",
+  "description": "A script which will automatically increment your app package version in accordance with conventional commits",
+  "main": "src/index.js",
+  "scripts": {
+    "bump-version": "node src/index.js"
+  },
+  "devDependencies": {
+    "@actions/exec": "^1.1.1",
+    "@commitlint/cli": "^17.0.1",
+    "@commitlint/config-conventional": "^17.0.0",
+    "husky": "^4.3.8"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "post-commit": "HUSKY_SKIP_HOOKS=1 yarn bump-version --name=version-bump"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sliit-foss/version-bump.git"
+  },
+  "keywords": [
+    "automatic-versioning",
+    "automated-versioning",
+    "bump-version",
+    "version-bump"
+  ],
+  "author": "SLIIT FOSS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sliit-foss/version-bump/issues"
+  },
+  "homepage": "https://github.com/sliit-foss/version-bump#readme"
+}
