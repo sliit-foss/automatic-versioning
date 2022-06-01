@@ -20,7 +20,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "post-commit": "HUSKY_SKIP_HOOKS=1 yarn bump-version --name=version-bump"
+      "post-commit": "HUSKY_SKIP_HOOKS=1 npm run bump-version --name=version-bump"
     }
   },
   "commitlint": {
