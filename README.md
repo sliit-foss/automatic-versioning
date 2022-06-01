@@ -1,4 +1,4 @@
-# version-bump
+# automatic-versioning
 
 A script which will automatically increment your app package version in accordance with conventional commits
 
@@ -9,10 +9,10 @@ A script which will automatically increment your app package version in accordan
 
 ```js
 # using npm
-npm install version-bump
+npm install automatic-versioning
 
 # using yarn
-yarn add version-bump
+yarn add automatic-versioning
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ yarn add version-bump
 - Add the following script to your package.json<br/>
 ```js
   "scripts": {
-      "bump-version": "npm explore version-bump -- npm run bump-version --name=<package_name>",
+      "bump-version": "npm explore automatic-versioning -- npm run bump-version --name=<package_name>",
   } 
 ```
 - then:

@@ -1,5 +1,5 @@
 {
-  "name": "version-bump",
+  "name": "automatic-versioning",
   "version": "1.0.0",
   "description": "A script which will automatically increment your app package version in accordance with conventional commits",
   "main": "src/index.js",
@@ -20,7 +20,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "post-commit": "HUSKY_SKIP_HOOKS=1 npm run bump-version --name=version-bump"
+      "post-commit": "HUSKY_SKIP_HOOKS=1 npm run bump-version --name=automatic-versioning"
     }
   },
   "commitlint": {
@@ -30,18 +30,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sliit-foss/version-bump.git"
+    "url": "git+https://github.com/sliit-foss/automatic-versioning.git"
   },
   "keywords": [
     "automatic-versioning",
     "automated-versioning",
     "bump-version",
-    "version-bump"
+    "automatic-versioning"
   ],
   "author": "SLIIT FOSS",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sliit-foss/version-bump/issues"
+    "url": "https://github.com/sliit-foss/automatic-versioning/issues"
   },
-  "homepage": "https://github.com/sliit-foss/version-bump#readme"
+  "homepage": "https://github.com/sliit-foss/automatic-versioning#readme"
 }
