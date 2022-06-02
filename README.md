@@ -84,3 +84,13 @@ yarn bump-version
   // example commit: 
   // git commit -m "feat: some feature --no-bump"
 ```
+
+## Custom app directory to run incrementing script<br/><br/>
+
+- Add the following argument to your bump script:<br/>
+```js
+  "--rootDir=<custom_dir>"
+  
+  // example script:
+  // npm explore automatic-versioning -- npm run bump-version --name=<package_name> --rootDir=<custom_dir>
+```
