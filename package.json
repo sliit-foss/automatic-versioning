@@ -1,6 +1,6 @@
 {
   "name": "automatic-versioning",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A script which will automatically increment your app package version in accordance with conventional commits",
   "main": "src/index.js",
   "scripts": {
