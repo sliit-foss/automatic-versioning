@@ -53,7 +53,8 @@ yarn bump-version
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run bump-version",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "post-commit": "HUSKY_SKIP_HOOKS=1 yarn bump-version",
     }
   },
   "commitlint": {
