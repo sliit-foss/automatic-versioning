@@ -1,3 +1,4 @@
+const path = require("path");
 const exec = require('@actions/exec');
 
 const args = process.argv.slice(2);
