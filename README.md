@@ -74,3 +74,13 @@ yarn bump-version
 
 - fix -
   - bump patch version <br/>
+
+## Disable version bump for specific commit<br/><br/>
+
+- Add the following to your commit message:<br/>
+```js
+  "--no-bump"
+
+  // example commit: 
+  // git commit -m "feat: some feature --no-bump"
+```

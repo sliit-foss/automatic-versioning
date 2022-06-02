@@ -47,21 +47,25 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
     console.log(`Diff found, running post-commit for ${name}`);
     run({command: 'git', args: ['log', '-1']}).then((res) => {
       const commitMessage = res.split('\n')[4].trim();
-      const changeType = commitMessage.split(':')[0].trim();
-      let versionUpdate = 'patch';
-      if (changeType.toLowerCase() == 'feature!' || changeType.toLowerCase() == 'feat!' || changeType.toLowerCase() == 'f!') {
-        versionUpdate = 'major';
-      } else if (changeType.toLowerCase() == 'feature' || changeType.toLowerCase() == 'feat' || changeType.toLowerCase() == 'f') {
-        versionUpdate = 'minor';
-      }
-      run({command: 'npm', args: [`--no-git-tag-version`, `version`, versionUpdate]}).then(() => {
-        const successMsg = `bumped version of ${name} to match latest ${versionUpdate} release`
-        run({command: 'git', args: [`add`, '.']}).then(() => {
-          run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
-            console.log(successMsg);
+      if (!commitMessage.includes('--no-bump')) {
+        const changeType = commitMessage.split(':')[0].trim();
+        let versionUpdate = 'patch';
+        if (changeType.toLowerCase() == 'feature!' || changeType.toLowerCase() == 'feat!' || changeType.toLowerCase() == 'f!') {
+          versionUpdate = 'major';
+        } else if (changeType.toLowerCase() == 'feature' || changeType.toLowerCase() == 'feat' || changeType.toLowerCase() == 'f') {
+          versionUpdate = 'minor';
+        }
+        run({command: 'npm', args: [`--no-git-tag-version`, `version`, versionUpdate]}).then(() => {
+          const successMsg = `bumped version of ${name} to match latest ${versionUpdate} release`
+          run({command: 'git', args: [`add`, '.']}).then(() => {
+            run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
+              console.log(successMsg);
+            })
           })
         })
-      })
+      } else {
+        console.log(`No bump found in commit message, skipping version bump`);
+      }
     })
   } else {
     console.log(`No diff found, skipping post-commit for ${name}`);
