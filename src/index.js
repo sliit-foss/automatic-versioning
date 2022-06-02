@@ -3,9 +3,13 @@ const exec = require('@actions/exec');
 const args = process.argv.slice(2);
 
 let name = 'app'
+let runFromRoot = false
 
 if (args.length > 0) {
   name = args[0].replace('--name=', '');
+  if (args.length > 1 && args[1] === '--run-from-root') {
+    runFromRoot = true
+  }
 }
 
 console.log(`Running post-commit for ${name}`);
@@ -30,6 +34,11 @@ const run = ({command, args}) => {
       return reject(error);
     })
   })
+}
+
+if (!runFromRoot) {
+  const parentDir = path.resolve(__dirname, '../../../');
+  process.chdir(parentDir);
 }
 
 run({command: 'git', args: [`show`, `./`]}).then((diff) => {
