@@ -64,33 +64,30 @@ yarn bump-version
   }
 ```
 
-## Commit message prefixes and associated version bumping<br/><br/>
+## Commit message prefixes and associated version bumping
 
-- feature! / feat! / f! -
-  - bump major version <br/><br/>
+  ```js
+      - feat! - bump major version
+  ```
+  ```js
+      - feat  - bump minor version
+  ```
+  ```js
+      - fix   - bump patch version
+  ```
 
-- feature / feat / f -
-  - bump minor version <br/>
+## Disable version bumping for specific commit<br/><br/>
 
-- fix -
-  - bump patch version <br/>
-
-## Disable version bump for specific commit<br/><br/>
-
-- Add the following to your commit message:<br/>
+- Add the following to your commit message: "--no-bump"<br/>
 ```js
-  "--no-bump"
-
-  // example commit: 
-  // git commit -m "feat: some feature --no-bump"
+  // example command
+  git commit -m "feat: some feature --no-bump"
 ```
 
 ## Custom app directory to run incrementing script<br/><br/>
 
-- Add the following argument to your bump script:<br/>
+- Add the following argument to your bump script: "--rootDir=<custom_dir>"<br/>
 ```js
-  "--rootDir=<custom_dir>"
-  
   // example script:
-  // npm explore automatic-versioning -- npm run bump-version --name=<package_name> --rootDir=<custom_dir>
+  npm explore automatic-versioning -- npm run bump-version --name=<package_name> --rootDir=<custom_dir>
 ```
