@@ -1,13 +1,15 @@
 {
   "name": "automatic-versioning",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A script which will automatically increment your app package version in accordance with conventional commits",
   "main": "src/index.js",
   "scripts": {
     "bump-version": "node src/index.js"
   },
+  "dependencies": {
+    "@actions/exec": "^1.1.1"
+  },
   "devDependencies": {
-    "@actions/exec": "^1.1.1",
     "@commitlint/cli": "^17.0.1",
     "@commitlint/config-conventional": "^17.0.0",
     "husky": "^4.3.8"
