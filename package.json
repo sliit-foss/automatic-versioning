@@ -20,7 +20,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "post-commit": "HUSKY_SKIP_HOOKS=1 yarn bump-version --name=version-bump"
+      "post-commit": "HUSKY_SKIP_HOOKS=1 yarn bump-version --name=automatic-versioning"
     }
   },
   "commitlint": {
@@ -35,8 +35,7 @@
   "keywords": [
     "automatic-versioning",
     "automated-versioning",
-    "bump-version",
-    "automatic-versioning"
+    "bump-version"
   ],
   "author": "SLIIT FOSS",
   "license": "MIT",
