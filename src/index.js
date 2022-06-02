@@ -5,7 +5,7 @@ const args = process.argv.slice(2);
 
 let name = 'app'
 let runFromRoot = false
-let rootDir = 'default'
+let rootDir = '../../../'
 
 if (args.length > 0) {
   name = args[0].replace('--name=', '');
@@ -13,7 +13,7 @@ if (args.length > 0) {
     if (args[1] === '--run-from-root') {
       runFromRoot = true
     } else if(args[1].includes('--rootDir=')) {
-      rootDir = args[1].replace('--rootDir=', '');
+      rootDir += args[1].replace('--rootDir=', '');
     }
   }
 }
@@ -43,9 +43,7 @@ const run = ({command, args}) => {
 }
 
 if (!runFromRoot) {
-  let parentDir
-  if (rootDir == 'default') parentDir = path.resolve(__dirname, '../../../');
-  else parentDir = path.resolve(__dirname, rootDir);
+  const parentDir = path.resolve(__dirname, rootDir);
   process.chdir(parentDir);
 }
 
