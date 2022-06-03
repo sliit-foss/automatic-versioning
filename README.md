@@ -2,6 +2,15 @@
 
 A script which will automatically increment your app package version in accordance with conventional commits
 
+---
+## Why automatic-versioning
+
+- Most version bumping scripts only focus on just the version bumping. **automatic-versioning** takes into account your git changes and automatically increments the version number based on your last commit message only if there are changes in your directory, a feature which is highly useful in monorepos.
+
+- **automatic-versioning** by default, skips version bumping for special commits such as merge commits.
+
+---
+
 ## Prerequisites
 - [Git](https://git-scm.com/) installed and configured
 
