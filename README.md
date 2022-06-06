@@ -29,7 +29,7 @@ yarn add automatic-versioning
 - Add the following script to your package.json<br/>
 ```js
   "scripts": {
-      "bump-version": "npm explore automatic-versioning -- npm run bump-version --name=<package_name>",
+      "bump-version": "yarn --cwd ./node_modules/automatic-versioning/ run bump-version --name=<package_name>"
   } 
 ```
 - then:
@@ -98,5 +98,5 @@ yarn bump-version
 - Add the following argument to your bump script: "--rootDir=<custom_dir>"<br/>
 ```js
   // example script:
-  npm explore automatic-versioning -- npm run bump-version --name=<package_name> --rootDir=<custom_dir>
+  yarn --cwd ./node_modules/automatic-versioning/ run bump-version --name=<package_name> --rootDir=<custom_dir>
 ```
