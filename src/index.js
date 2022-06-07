@@ -6,11 +6,13 @@ const args = process.argv.slice(2);
 let name = 'app'
 let runFromRoot = false
 let rootDir = '../../../'
+let noCommitEdit = false
 
 args.forEach((arg) => {
   if (arg.includes('--name=')) name = arg.replace('--name=', '');
   if (arg.includes('--run-from-root')) runFromRoot = true
   if (arg.includes('--rootDir=')) rootDir += arg.replace('--rootDir=', '');
+  if (arg.includes('--no-commit-edit')) noCommitEdit = true
 })
 
 console.log(`Running post-commit for ${name}`);
@@ -66,10 +68,14 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
               })
             })
           } else {
-            console.log(`No bump found in commit message, skipping version bump and editing commit message`);
-            run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--no-bump', '')}`]}).then(() => {
-              console.log('Successfully edited commit message');
-            })
+            if (noCommitEdit) {
+              console.log(`No bump found in commit message, skipping version bump`);
+            } else {
+              console.log(`No bump found in commit message, skipping version bump and editing commit message`);
+              run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--no-bump', '')}`]}).then(() => {
+                console.log('Successfully edited commit message');
+              })
+            }
           }
         } else {
           console.log(`Revert commit found, skipping version bump`);

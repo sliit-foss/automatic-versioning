@@ -93,6 +93,13 @@ yarn bump-version
   git commit -m "feat: some feature --no-bump"
 ```
 
+## Disable --no-bump commit message edit <br/><br/>
+- By default automatic-versioning will edit the commit message in no-bump commits and remove the no-bump part from the commit message. Sometimes such as in the case of monorepos, this can prove to be a problem. To disable this behavior, add the following to your script: "--no-commit-edit"<br/>
+```js
+  // example script:
+  yarn --cwd ./node_modules/automatic-versioning/ run bump-version --name=<package_name> --no-commit-edit
+```
+
 ## Custom app directory to run incrementing script<br/><br/>
 
 - Add the following argument to your bump script: "--rootDir=<custom_dir>"<br/>
