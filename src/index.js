@@ -7,16 +7,11 @@ let name = 'app'
 let runFromRoot = false
 let rootDir = '../../../'
 
-if (args.length > 0) {
-  name = args[0].replace('--name=', '');
-  if (args.length > 1) {
-    if (args[1] === '--run-from-root') {
-      runFromRoot = true
-    } else if(args[1].includes('--rootDir=')) {
-      rootDir += args[1].replace('--rootDir=', '');
-    }
-  }
-}
+args.forEach((arg) => {
+  if (arg.includes('--name=')) name = arg.replace('--name=', '');
+  if (arg.includes('--run-from-root')) runFromRoot = true
+  if (arg.includes('--rootDir=')) rootDir += arg.replace('--rootDir=', '');
+})
 
 console.log(`Running post-commit for ${name}`);
 
@@ -71,7 +66,10 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
               })
             })
           } else {
-            console.log(`No bump found in commit message, skipping version bump`);
+            console.log(`No bump found in commit message, skipping version bump and editing commit message`);
+            run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--no-bump', '')}`]}).then(() => {
+              console.log('Successfully edited commit message');
+            })
           }
         } else {
           console.log(`Revert commit found, skipping version bump`);
