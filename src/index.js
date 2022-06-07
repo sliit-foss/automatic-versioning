@@ -63,7 +63,7 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
               versionUpdate = 'minor';
             }
             run({command: 'npm', args: [`--no-git-tag-version`, `version`, versionUpdate]}).then(() => {
-              const successMsg = `bumped version of ${name} to match latest ${versionUpdate} release`
+              const successMsg = `${commitMessage[0] == commitMessage[0].toUpperCase() ? 'B' : 'b'}umped version of ${name} to match latest ${versionUpdate} release`
               run({command: 'git', args: [`add`, '.']}).then(() => {
                 run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
                   console.log(successMsg);
