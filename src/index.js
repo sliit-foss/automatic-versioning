@@ -1,5 +1,6 @@
 const path = require("path");
 const exec = require('@actions/exec');
+const colors = require('colors');
 
 const args = process.argv.slice(2);
 
@@ -15,7 +16,7 @@ args.forEach((arg) => {
   if (arg.includes('--no-commit-edit')) noCommitEdit = true
 })
 
-console.log(`Running post-commit for ${name}`);
+console.log(`Running post-commit for ${name}`.green);
 
 const run = ({command, args}) => {
   return new Promise((resolve, reject) => {
@@ -33,7 +34,7 @@ const run = ({command, args}) => {
     }).then(() => {
       return resolve(output);
     }).catch((error) => {
-      console.log(error);
+      console.log(error.red);
       return reject(error);
     })
   })
@@ -46,7 +47,7 @@ if (!runFromRoot) {
 
 run({command: 'git', args: [`show`, `./`]}).then((diff) => {
   if (diff) {
-    console.log(`Diff found, running post-commit for ${name}`);
+    console.log(`Diff found, running post-commit for ${name}`.green);
     run({command: 'git', args: ['log', '-1']}).then((res) => {
       const commitMessage = res.split('\n')[4].trim();
       if (!commitMessage.startsWith('Merge')) {
@@ -63,29 +64,29 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
               const successMsg = `${commitMessage[0] == commitMessage[0].toUpperCase() ? 'B' : 'b'}umped version of ${name} to match latest ${versionUpdate} release`
               run({command: 'git', args: [`add`, '.']}).then(() => {
                 run({command: 'git', args: [`commit`, '-m', `${successMsg}`]}).then(() => {
-                  console.log(successMsg);
+                  console.log(successMsg.green);
                 })
               })
             })
           } else {
             if (noCommitEdit) {
-              console.log(`No bump found in commit message, skipping version bump`);
+              console.log(`No bump found in commit message, skipping version bump`.yellow);
             } else {
-              console.log(`No bump found in commit message, skipping version bump and editing commit message`);
+              console.log(`No bump found in commit message, skipping version bump and editing commit message`.yellow);
               run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--no-bump', '')}`]}).then(() => {
-                console.log('Successfully edited commit message');
+                console.log('Successfully edited commit message'.green);
               })
             }
           }
         } else {
-          console.log(`Revert commit found, skipping version bump`);
+          console.log(`Revert commit found, skipping version bump`.yellow);
         }
       } else {
-        console.log(`Merge commit found, skipping version bump`);
+        console.log(`Merge commit found, skipping version bump`.yellow);
       }
     })
   } else {
-    console.log(`No diff found, skipping post-commit for ${name}`);
+    console.log(`No diff found, skipping post-commit for ${name}`.yellow);
   }
 })
 

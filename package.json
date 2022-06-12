@@ -7,7 +7,8 @@
     "bump-version": "node src/index.js"
   },
   "dependencies": {
-    "@actions/exec": "^1.1.1"
+    "@actions/exec": "^1.1.1",
+    "colors": "^1.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.1",
@@ -28,7 +29,26 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
+    ],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "Feat!",
+          "Feat",
+          "Fix",
+          "feat!",
+          "feat",
+          "fix"
+        ]
+      ],
+      "type-case": [
+        1,
+        "always",
+        "pascal-case"
+      ]
+    }
   },
   "repository": {
     "type": "git",
