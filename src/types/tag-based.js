@@ -5,14 +5,17 @@ module.exports = (name) => {
         initalVersion = initalVersion.replace(/\n/g, '')?.replaceAll('\"', '')?.replaceAll('-', '')?.trim();
         run({ command: 'git', args: [`tag`] }).then((tags) => {
             const latest = tags.split('\n')?.reverse()[1]?.trim()?.replace('v', '')?.replace('_', '').replace('-', '');
-            console.log(`Latest version: ${latest}`);
-            console.log(`inital version: ${initalVersion}`);
             if (latest !== initalVersion) {
                 run({ command: 'npm', args: [`version`, latest, '--allow-same-version', '--no-git-tag-version'] }).then(() => {
                     const successMsg = `Bumped version of ${name} from ${initalVersion} to ${latest}`
                     run({ command: 'git', args: [`add`, '.'] }).then(() => {
                         run({ command: 'git', args: [`commit`, '-m', `${successMsg}`] }).then(() => {
-                            console.log(successMsg.green);
+                            run({ command: 'git', args: [`status`] }).then((status) => {
+                                const currentBranch = status.split('\n')[0]?.split(' ')[2];
+                                run({ command: 'git', args: [`push`, 'origin', currentBranch] }).then(() => {
+                                    console.log(successMsg.green);
+                                })
+                            })
                         })
                     })
                 })
