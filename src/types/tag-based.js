@@ -11,9 +11,10 @@ module.exports = (name) => {
             }
             if (latest && latest !== initialVersion) {
                 run({ command: 'npm', args: [`version`, latest, '--no-git-tag-version'] }).then(() => {
+                    const successMsg = `Bumped version of ${name} from ${initialVersion} to ${latest}`
                     run({ command: 'git', args: [`add`, '.'] }).then(() => {
-                        run({ command: 'git', args: [`commit`, '--amend', '--no-edit'] }).then(() => {
-                            console.log(`Bumped version of ${name} from ${initialVersion} to ${latest}`.green);
+                        run({ command: 'git', args: [`commit`, '-m', `${successMsg}`] }).then(() => {
+                            console.log(successMsg.green);
                         })
                     })
                 }).catch(() => { })
