@@ -52,7 +52,7 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
       const commitMessage = res.split('\n')[4].trim();
       if (!commitMessage.startsWith('Merge')) {
         if (!commitMessage.startsWith('Revert')) {
-          if (!commitMessage.includes('--no-bump')) {
+          if (commitMessage.includes('--bump')) {
             const changeType = commitMessage.split(':')[0].trim();
             let versionUpdate = 'patch';
             if (changeType.toLowerCase() == 'feature!' || changeType.toLowerCase() == 'feat!' || changeType.toLowerCase() == 'f!') {
@@ -73,7 +73,7 @@ run({command: 'git', args: [`show`, `./`]}).then((diff) => {
               console.log(`No bump found in commit message, skipping version bump`.yellow);
             } else {
               console.log(`No bump found in commit message, skipping version bump and editing commit message`.yellow);
-              run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--no-bump', '')}`]}).then(() => {
+              run({command: 'git', args: [`commit`, '--amend', '-m', `${commitMessage.replaceAll('--bump', '')}`]}).then(() => {
                 console.log('Successfully edited commit message'.green);
               })
             }
