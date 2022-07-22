@@ -5,7 +5,7 @@ module.exports = (name) => {
         initalVersion = initalVersion.replace(/\n/g, '')?.replaceAll('\"', '')?.replaceAll('-', '')?.trim();
         run({ command: 'git', args: [`tag`, '--sort=committerdate'] }).then((tags) => {
             const latest = tags.split('\n')?.reverse()[1]?.trim()?.replace('v', '')?.replace('_', '').replace('-', '');
-            if (latest !== initalVersion) {
+            if (latest && latest !== initalVersion) {
                 run({ command: 'npm', args: [`version`, latest, '--allow-same-version', '--no-git-tag-version'] }).then(() => {
                     const successMsg = `Bumped version of ${name} from ${initalVersion} to ${latest}`
                     run({ command: 'git', args: [`add`, '.'] }).then(() => {
