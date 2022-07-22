@@ -16,7 +16,7 @@ module.exports = ({ command, args }) => {
         }).then(() => {
             return resolve(output);
         }).catch((error) => {
-            console.log(error.red);
+            if (error) console.log(error.red);
             return reject(error);
         })
     })
