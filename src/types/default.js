@@ -10,11 +10,16 @@ module.exports = (name, noCommitEdit) => {
                     if (!commitMessage.startsWith('Revert')) {
                         if (!commitMessage.includes('--no-bump')) {
                             const changeType = commitMessage.split(':')[0].trim();
-                            let versionUpdate = 'patch';
+                            let versionUpdate;
                             if (changeType.toLowerCase() == 'feature!' || changeType.toLowerCase() == 'feat!' || changeType.toLowerCase() == 'f!') {
                                 versionUpdate = 'major';
                             } else if (changeType.toLowerCase() == 'feature' || changeType.toLowerCase() == 'feat' || changeType.toLowerCase() == 'f') {
                                 versionUpdate = 'minor';
+                            } else if (changeType.toLowerCase() == 'fix') {
+                                versionUpdate = 'patch';
+                            } else {
+                                console.log(`No commit prefix found in commit message, skipping version bump`.yellow);
+                                return
                             }
                             run({ command: 'npm', args: [`--no-git-tag-version`, `version`, versionUpdate] }).then(() => {
                                 const successMsg = `${commitMessage[0] == commitMessage[0].toUpperCase() ? 'B' : 'b'}umped version of ${name} to match latest ${versionUpdate} release`
